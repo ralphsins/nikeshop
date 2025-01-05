@@ -56,13 +56,14 @@ app.use(cors());  // Enabling CORS for all routes
 
 // Create an endpoint to get all items
 app.get('/items', async (req, res) => {
-  try {
-    const items = await Item.find();
-    res.json(items);
-  } catch (err) {
-    res.status(500).json({ message: 'Error fetching items' });
-  }
-});
+    try {
+      const items = await Item.find();
+      res.json(items.reverse());
+    } catch (err) {
+      res.status(500).json({ message: 'Error fetching items' });
+    }
+  });
+  
 
 // Add a new item
 app.post('/addItems', async (req, res) => {
