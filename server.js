@@ -12,7 +12,7 @@ const mongoDBURL = 'mongodb+srv://root:12345@cluster0.gbzdemx.mongodb.net/nike_s
 mongoose.connect(mongoDBURL)
   .then(() => {
     console.log('Connected to MongoDB');
-   nsert data after successful connection
+ 
   })
   .catch(err => console.error('Failed to connect to MongoDB', err));
 
