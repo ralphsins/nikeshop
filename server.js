@@ -64,6 +64,29 @@ app.get('/items', async (req, res) => {
   }
 });
 
+app.post('/addItems', async (req, res) => {
+    const { name, price, category, image, qtty } = req.body;
+  
+    if (!name || !price || !category || !image) {
+      return res.status(400).json({ message: 'Missing required fields' });
+    }
+  
+    const newItem = new Item({
+      name,
+      price,
+      category,
+      image,
+      qtty
+    });
+  
+    try {
+      const savedItem = await newItem.save();
+      res.status(201).json(savedItem);  
+    } catch (err) {
+      res.status(500).json({ message: 'Error adding product' });
+    }
+  });
+
 // Start the server
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
