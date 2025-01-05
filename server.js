@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');  // Importing cors
 
 const app = express();
 const port = 3000;
@@ -11,7 +12,7 @@ const mongoDBURL = 'mongodb+srv://root:12345@cluster0.gbzdemx.mongodb.net/nike_s
 mongoose.connect(mongoDBURL)
   .then(() => {
     console.log('Connected to MongoDB');
-    insertInitialData(); // Insert data after successful connection
+   nsert data after successful connection
   })
   .catch(err => console.error('Failed to connect to MongoDB', err));
 
@@ -49,6 +50,9 @@ const insertInitialData = async () => {
     console.error('Error inserting data:', err);
   }
 };
+
+// Use cors middleware
+app.use(cors());  // Enabling CORS for all routes
 
 // Create an endpoint to get all items
 app.get('/items', async (req, res) => {
