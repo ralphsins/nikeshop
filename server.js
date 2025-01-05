@@ -12,7 +12,6 @@ const mongoDBURL = 'mongodb+srv://root:12345@cluster0.gbzdemx.mongodb.net/nike_s
 mongoose.connect(mongoDBURL)
   .then(() => {
     console.log('Connected to MongoDB');
- 
   })
   .catch(err => console.error('Failed to connect to MongoDB', err));
 
@@ -51,7 +50,8 @@ const insertInitialData = async () => {
   }
 };
 
-// Use cors middleware
+// Use express.json() middleware to parse JSON requests
+app.use(express.json());  // This ensures that req.body is parsed as JSON
 app.use(cors());  // Enabling CORS for all routes
 
 // Create an endpoint to get all items
@@ -64,28 +64,29 @@ app.get('/items', async (req, res) => {
   }
 });
 
+// Add a new item
 app.post('/addItems', async (req, res) => {
-    const { name, price, category, image, qtty } = req.body;
-  
-    if (!name || !price || !category || !image) {
-      return res.status(400).json({ message: 'Missing required fields' });
-    }
-  
-    const newItem = new Item({
-      name,
-      price,
-      category,
-      image,
-      qtty
-    });
-  
-    try {
-      const savedItem = await newItem.save();
-      res.status(201).json(savedItem);  
-    } catch (err) {
-      res.status(500).json({ message: 'Error adding product' });
-    }
+  const { name, price, category, image, qtty } = req.body;
+
+  if (!name || !price || !category || !image) {
+    return res.status(400).json({ message: 'Missing required fields' });
+  }
+
+  const newItem = new Item({
+    name,
+    price,
+    category,
+    image,
+    qtty
   });
+
+  try {
+    const savedItem = await newItem.save();
+    res.status(201).json(savedItem);
+  } catch (err) {
+    res.status(500).json({ message: 'Error adding product' });
+  }
+});
 
 // Start the server
 app.listen(port, () => {
