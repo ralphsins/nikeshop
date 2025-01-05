@@ -1,0 +1,14 @@
+# Node.js / Express.js
+node_modules/
+dist/
+.env
+
+# Build output
+build/
+bin/
+logs/
+*.log
+
+# Dependency directories
+vendor/
+jspm_packages/
